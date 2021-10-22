@@ -9,7 +9,7 @@
     <input v-model="password" placeholder="password" type="password" />
 
     <button v-on:click="register(username, password)">Register</button>
-    <br>
+    <br />
   </div>
 </template>
 
@@ -23,19 +23,33 @@ export default {
     };
   },
   methods: {
-    login(username, password) {
-      if (username != '' && password != '') {
+    register(username, password) {
+      if (username != "" && password.length > 7) {
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+            password2: password,
+            email: `${username}@${username}.com`,
+            first_name: "",
+            last_name: "",
+          }),
+        };
+        fetch("http://127.0.0.1:8000/api/v1/auth/register/", requestOptions);
+
         if (username == "teun" && password == "teun") {
-          this.$emit('success', true);
+          this.$emit("success", true);
         } else {
-          console.log('login.vue - error: wrong username or password...');
+          console.log("register.vue - error: failed to create account");
         }
+      }else{
+        alert("your password should be at least 8 characters in length")
       }
     },
   },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
