@@ -23,12 +23,35 @@ export default {
     };
   },
   methods: {
+    // here should be a rest call with the backend server for logging in
     login(username, password) {
-      if (username != '' && password != '') {
-        if (username == "teun" && password == "teun") {
-          this.$emit('success', true);
-        } else {
-          console.log('login.vue - error: wrong username or password...');
+      if (username != "" && password.length > 7) {
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+        };
+
+        fetch("http://127.0.0.1:8000/api/v1/auth/token/", requestOptions)
+          .then((response) => {
+            if (!response.ok) {
+              throw response;
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('refresh: ' + data.refresh);
+            console.log('access: ' + data.access);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      } else {
+        if (password.length < 8) {
+          alert("Did you enter the right password?");
         }
       }
     },

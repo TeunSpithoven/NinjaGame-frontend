@@ -37,15 +37,21 @@ export default {
             last_name: "",
           }),
         };
-        fetch("http://127.0.0.1:8000/api/v1/auth/register/", requestOptions);
 
-        if (username == "teun" && password == "teun") {
-          this.$emit("success", true);
-        } else {
-          console.log("register.vue - error: failed to create account");
+        fetch("http://127.0.0.1:8000/api/v1/auth/register/", requestOptions)
+          .then((response) => {
+            if (!response.ok) {
+              throw response;
+            }
+            return response.json();
+          })
+          .catch(function() {
+            console.log("error");
+          });
+      } else {
+        if (password.length < 8) {
+          alert("your password should be at least 8 characters in length");
         }
-      }else{
-        alert("your password should be at least 8 characters in length")
       }
     },
   },
