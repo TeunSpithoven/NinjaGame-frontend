@@ -38,7 +38,7 @@ export default {
           }),
         };
 
-        fetch("http://127.0.0.1:8000/api/v1/auth/register/", requestOptions)
+        fetch("http://127.0.0.1:8000/auth/register/", requestOptions)
           .then((response) => {
             if (!response.ok) {
               throw response;

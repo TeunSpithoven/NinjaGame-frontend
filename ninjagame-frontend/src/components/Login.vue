@@ -35,7 +35,7 @@ export default {
           }),
         };
 
-        fetch("http://127.0.0.1:8000/api/v1/auth/token/", requestOptions)
+        fetch("http://127.0.0.1:8000/auth/token/", requestOptions)
           .then((response) => {
             if (!response.ok) {
               throw response;
