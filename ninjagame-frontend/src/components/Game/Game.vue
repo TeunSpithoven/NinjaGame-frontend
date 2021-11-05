@@ -42,7 +42,7 @@
           </div>
         </div>
 
-        <small class="has-text-grey-light">Your username: {{ username }}</small>
+        <small class="has-text-grey-light">Your username: {{ this.username }}</small>
       </div>
     </div>
   </div>
@@ -50,17 +50,31 @@
 
 <script>
 export default {
-  name: "Chatroom",
+  name: "Game",
   props: {
     username: String,
-    roomname: String,
+    gamename: String,
   },
   data() {
     return {
-        messages: [],
+      connection: null,
+      messages: [],
     };
   },
-  methods: {},
+  methods: {
+    connect() {
+      console.log('Starting websocket connection...');
+      this.connection = new WebSocket(`ws://127.0.0.1:8000/game/${this.gamename}/`);
+
+      this.connection.onopen = function(event) {
+        console.log(event);
+        console.log("Succesfully connected to websocket.")
+      }
+    },
+  },
+  mounted() {
+    
+  },
 };
 </script>
 

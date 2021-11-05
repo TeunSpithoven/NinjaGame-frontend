@@ -4,7 +4,8 @@ import Login from '../views/Login.vue'
 import Register from'../views/Register.vue'
 import Stats from '../views/Stats.vue'
 import Join from '../components/Game/Join.vue'
-import Chatroom from '../components/Game/Chatroom.vue'
+import Game from '../components/Game/Game.vue'
+import Echo from '../components/Echo.vue'
 
 const routes = [
   {
@@ -33,9 +34,14 @@ const routes = [
     component: Join
   },
   {
-    path: '/chatroom',
-    name: 'Chatroom',
-    component: Chatroom
+    path: '/game',
+    name: 'Game',
+    component: Game
+  },
+  {
+    path: '/echo',
+    name: 'Echo',
+    component: Echo
   },
 ]
 

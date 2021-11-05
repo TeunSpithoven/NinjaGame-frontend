@@ -4,12 +4,12 @@
     <br />
     <input v-model="username" placeholder="username" type="text" />
     <br />
-    <label for="roomname"><b>RoomName</b></label>
+    <label for="gamename"><b>GameName</b></label>
     <br />
-    <input v-model="roomname" placeholder="roomname" type="text" />
+    <input v-model="gamename" placeholder="gamename" type="text" />
     <br />
-    <router-link to="./Chatroom.vue">
-        <button v-on:click="join(username, roomname)">Connect</button>
+    <router-link to="./game">
+        <button v-on:click="join(this.username, this.gamename)">Connect</button>
     </router-link>
     <br>
   </div>
@@ -21,22 +21,22 @@ export default {
   data() {
     return {
       username: "",
-      roomname: "",
+      gamename: "",
     };
   },
   methods: {
-    join(username, roomname) {
-      if (username != "" && roomname!= "") {
+    join(username, gamename) {
+      if (this.username != "" && gamename!= "") {
         const requestOptions = {
-          method: "GET",
+          method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             username: username,
-            roomname: roomname,
+            gamename: gamename,
           }),
         };
 
-        fetch(`http://127.0.0.1:8000/${roomname}/?username=${username}`, requestOptions)
+        fetch(`http://127.0.0.1:8000/${gamename}/?username=${username}`, requestOptions)
           .then((response) => {
             if (!response.ok) {
               throw response;
