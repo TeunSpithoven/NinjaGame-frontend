@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <div class="columns is-multiline">
       <div class="column is-6 is-offset-3 mb-6">
         <section class="hero is-primary">
