@@ -8,9 +8,9 @@
     <br />
     <input v-model="gamename" placeholder="gamename" type="text" />
     <br />
-    <router-link to="./game">
-        <button v-on:click="join(this.username, this.gamename)">Connect</button>
-    </router-link>
+      <button v-on:click="join(this.username, this.gamename)">Connect
+        <router-link to="./game"></router-link>
+      </button>
     <br>
   </div>
 </template>

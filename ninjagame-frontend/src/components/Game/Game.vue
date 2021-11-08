@@ -20,9 +20,10 @@
           <div
             id="chat-messages"
             style="max-height: 300px; overflow-y: scroll;"
+            v-for="m in messages" :key="m.content"
           >
-            {% for m in messages %}<b>{{ m.username }}</b
-            >: {{ m.content }}<br />{% endfor %}
+            <b>{{ m.username }}</b
+            >: {{ m.content }}<br />
           </div>
         </div>
 
