@@ -5,7 +5,8 @@ import Register from'../views/Register.vue'
 import Stats from '../views/Stats.vue'
 import Join from '../components/Game/Join.vue'
 import Game from '../components/Game/Game.vue'
-import Echo from '../components/Echo.vue'
+import joinroom from '../views/Chat/joinroom.vue'
+import room from '../views/Chat/room.vue'
 
 const routes = [
   {
@@ -33,15 +34,23 @@ const routes = [
     name: 'Join',
     component: Join
   },
+  // ZOOI VOOR WSTEST
+  {
+    path: '/joinroom',
+    name: 'joinroom',
+    component: joinroom
+  },
+  {
+    path: '/room/:roomname',
+    name: 'room',
+    component: room,
+    props: true,
+  },
+  // EINDE ZOOI
   {
     path: '/game',
     name: 'Game',
     component: Game
-  },
-  {
-    path: '/echo',
-    name: 'Echo',
-    component: Echo
   },
 ]
 

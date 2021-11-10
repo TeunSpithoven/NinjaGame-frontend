@@ -8,13 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
     "axios": "^0.21.2",
+    "core-js": "^3.6.5",
     "fastify": "^3.18.1",
     "fastify-cors": "^6.0.1",
-    "fastify-websocket": "^3.2.0"
+    "fastify-websocket": "^3.2.0",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
