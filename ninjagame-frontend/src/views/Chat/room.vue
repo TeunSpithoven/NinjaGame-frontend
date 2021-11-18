@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import joinroom from './joinroom.vue'
+// import joinroom from './joinroom.vue'
 
 export default {
   name: "room",
-  props: {
-      roomName: joinroom.props.roomName,
-  },
+  // props: {
+  //     roomName: joinroom.props.roomName,
+  // },
   data() {
     return {
     //  roomName: String,
@@ -31,15 +31,15 @@ export default {
   },
   
   mounted: {
-    Connect() {
-      this.chatSocket = new WebSocket(
-        "ws://localhost:8000/wstest/" + this.roomName + "/"
-      );
-      this.chatSocket.onopen = (event) => {
-          console.log('websocket opened!');
-          console.log(event);
-      }
-    },
+    // Connect() {
+    //   this.chatSocket = new WebSocket(
+    //     "ws://localhost:8000/wstest/" + this.roomName + "/"
+    //   );
+    //   this.chatSocket.onopen = (event) => {
+    //       console.log('websocket opened!');
+    //       console.log(event);
+    //   }
+    // },
     Recieve() {
       this.chatSocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
