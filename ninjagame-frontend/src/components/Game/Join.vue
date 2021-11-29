@@ -12,6 +12,7 @@
         <router-link to="./game"></router-link>
       </button>
     <br>
+    <button v-on:click="sendGameData()">Test Send GameData</button>
   </div>
 </template>
 
@@ -20,59 +21,32 @@ export default {
   name: "Join",
   data() {
     return {
+      connection: null,
       username: "",
       gamename: "",
+      game_data: {
+        player: {
+          username: 'testusername',
+          posX: 50,
+          posY: 90,
+        },
+        shuriken: {
+          playerName: 'testplayername',
+          posX: 900,
+          posY: 800,
+        },
+      },
     };
   },
   methods: {
     join(username, gamename) {
-      if (this.username != "" && gamename!= "") {
-        const requestOptions = {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: username,
-            gamename: gamename,
-          }),
-        };
-
-        fetch(`http://127.0.0.1:8000/${gamename}/?username=${username}`, requestOptions)
-          .then((response) => {
-            if (!response.ok) {
-              throw response;
-            }
-            return response.json();
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
-      } else {
-        alert("did you fill in a username and roomname?");
-      }
+      //route to game and make websocket connection there
+      console.log("Starting connection to WebSocket Server");
+      this.connection = new WebSocket(`ws://127.0.0.1:8008/ws/${gamename}/`);
     },
-    connect(roomname) {
-      if (roomname!= "") {
-        const requestOptions = {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            roomname: roomname,
-          }),
-        };
-
-        fetch(`ws://127.0.0.1:8000/ws/${roomname}/`, requestOptions)
-          .then((response) => {
-            if (!response.ok) {
-              throw response;
-            }
-            return response.json();
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
-      } else {
-        alert("error: no room name entered");
-      }
+    sendGameData() {
+      console.log(this.connection);
+      this.connection.send(JSON.stringify(this.game_data));
     },
   },
 };

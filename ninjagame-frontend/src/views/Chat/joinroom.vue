@@ -6,7 +6,9 @@
     </head>
     <body>
       Enter Room Name<br />
-      <input v-model="roomName" type="text" size="100" /><br />
+      <input v-model="roomName" type="text" size="100" placeholder="room"/><br />
+      Enter User Name
+      <input v-model="userName" type="text" size="100" placeholder="username"/><br />
       <button v-on:click="Join()">Join room</button>
       <br />
     </body>
@@ -14,30 +16,40 @@
 </template>
 
 <script>
-import { inject } from "vue";
-import computed from "vue";
+// import { inject } from "vue";
 
 export default {
   name: "joinroom",
-  setup() {
-    const store = inject("store");
-    const { roomName } = store();
+  // setup() {
+  //   const store = inject("store");
+  //   const { roomName, userName } = store();
 
-    setRoomName = (event) => {
-      setRoomName();
-    };
+  //   setRoomName = (event) => {
+  //     this.roomName = store.state.roomName;
+  //   };
 
+  //   setUserName = (event) => {
+  //     this.userName = store.state.userName;
+  //   };
+
+  //   return {
+  //     roomName,
+  //     getRoomName: () => store.commit(""),
+  //     userName,
+  //     getUserName: () => store.commit(""),
+  //   };
+  // },
+  data() {
     return {
-      roomName,
-      getRoomName: () => store.commit(""),
+      roomName: String,
+      userName: String,
     };
   },
   methods: {
     Join() {
-      setRoomName();
       //conect websocket
       this.chatSocket = new WebSocket(
-        "ws://localhost:8000/wstest/" + this.roomName + "/"
+        "ws://localhost:8000/" + this.roomName + "/"
       );
       this.chatSocket.onopen = (event) => {
         console.log("websocket opened!");
@@ -45,7 +57,14 @@ export default {
       };
 
       //change window location
-      window.location.assign(`http://localhost:8080/room/${this.roomName}`);
+      this.$router.push({
+        name: 'room',
+        params: {
+          roomName: this.roomName,
+          userName: this.userName,
+        },
+      });
+      // window.location.assign(`http://localhost:8080/room/${this.roomName}`);
     },
   },
 };

@@ -18,9 +18,10 @@
 
 export default {
   name: "room",
-  // props: {
-  //     roomName: joinroom.props.roomName,
-  // },
+  props: {
+    roomName: String,
+    userName: String,
+  },
   data() {
     return {
     //  roomName: String,
