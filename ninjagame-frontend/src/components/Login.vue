@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <label for="uname"><b>Username</b></label>
+    <label for="username"><b>username</b></label>
     <br />
     <input v-model="username" placeholder="username" type="text" />
     <br />
-    <label for="psw"><b>Password</b></label>
+    <label for="password"><b>password</b></label>
     <br />
     <input v-model="password" placeholder="password" type="password" />
 
@@ -18,13 +18,15 @@ export default {
   name: "Login",
   data() {
     return {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
+      error: 'initialError',
     };
   },
   methods: {
     // here should be a rest call with the backend server for logging in
     login(username, password) {
+      this.error = '';
       if (username != "" && password.length > 7) {
         const requestOptions = {
           method: "POST",
@@ -49,11 +51,17 @@ export default {
           })
           .catch((error) => {
             console.error('Error:', error);
+            this.error = error;
             this.$emit('success', false);
           });
       } else {
-        if (password.length < 8) {
-          alert("Did you enter the right password?");
+        if (password.length < 8 || password.length <= 0) {
+          this.error = 'Did you enter the right password?';
+          alert(this.error);
+        }
+        if (username == ''){
+          this.error = 'Did you enter the right username?';
+          alert(this.error);
         }
         this.$emit('success', false);
       }
