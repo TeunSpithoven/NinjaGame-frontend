@@ -8,7 +8,7 @@
     <br />
     <input v-model="gamename" placeholder="gamename" type="text" />
     <br />
-      <button v-on:click="join(this.username, this.gamename)">Connect
+      <button v-on:click="join(this.game_data.gamename)">Connect
         <router-link to="./game"></router-link>
       </button>
     <br>
@@ -22,9 +22,8 @@ export default {
   data() {
     return {
       connection: null,
-      username: "",
-      gamename: "",
       game_data: {
+        gamename: '',
         player: {
           username: 'testusername',
           posX: 50,
@@ -39,7 +38,7 @@ export default {
     };
   },
   methods: {
-    join(username, gamename) {
+    join(gamename) {
       //route to game and make websocket connection there
       console.log("Starting connection to WebSocket Server");
       this.connection = new WebSocket(`ws://127.0.0.1:8008/ws/${gamename}/`);
