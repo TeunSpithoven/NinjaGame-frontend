@@ -1,5 +1,5 @@
 <template>
-  <Login @success="onSuccesLogin" />
+  <Login @success="Login_Success" />
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
     Login,
   },
   methods: {
-    onSuccesLogin(value) {
+    Login_Success(value) {
       if(value){
         console.log('login.vue - login succesful');
       }else{

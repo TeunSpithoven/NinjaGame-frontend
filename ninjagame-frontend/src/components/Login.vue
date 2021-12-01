@@ -45,14 +45,17 @@ export default {
           .then(data => {
             console.log('refresh: ' + data.refresh);
             console.log('access: ' + data.access);
+            this.$emit('success', true);
           })
           .catch((error) => {
             console.error('Error:', error);
+            this.$emit('success', false);
           });
       } else {
         if (password.length < 8) {
           alert("Did you enter the right password?");
         }
+        this.$emit('success', false);
       }
     },
   },
