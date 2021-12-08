@@ -3,13 +3,14 @@
 </template>
 
 <script>
-import Register from '../components/Register.vue'
+import Register from '../components/Register.vue';
+
 export default {
   name: 'RegisterView',
-    components: {
-        Register
-    }
-}
+  components: {
+    Register
+  },
+};
 </script>
 
 <style>
