@@ -1,52 +1,9 @@
 <template>
   <div class="container">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
-    <div class="columns is-multiline">
-      <div class="column is-6 is-offset-3 mb-6">
-        <section class="hero is-primary">
-          <div class="hero-body">
-            <p class="title">
-              Chatty
-            </p>
-            <p class="subtitle">
-              A simple chat built with Django, Channels and Redis
-            </p>
-          </div>
-        </section>
-      </div>
-
-      <div class="column is-6 is-offset-3">
-        <div class="box">
-          <div
-            id="chat-messages"
-            style="max-height: 300px; overflow-y: scroll;"
-            v-for="m in messages" :key="m.content"
-          >
-            <b>{{ m.username }}</b
-            >: {{ m.content }}<br />
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Message"
-              id="chat-message-input"
-            />
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <a class="button is-info" id="chat-message-submit">Submit</a>
-          </div>
-        </div>
-
-        <small class="has-text-grey-light">Your username: {{ this.username }}</small>
-      </div>
-    </div>
+    <h1>This is the game page!</h1>
+    <h3>Your username: {{ this.username }}</h3>
+    <h3>The name of this game: {{ this.gamename }}</h3>
+    <button @click="this.$emit('leave')">Leave Game</button>
   </div>
 </template>
 
@@ -62,20 +19,6 @@ export default {
       connection: null,
       messages: [],
     };
-  },
-  methods: {
-    connect() {
-      console.log('Starting websocket connection...');
-      this.connection = new WebSocket(`ws://127.0.0.1:8000/game/${this.gamename}/`);
-
-      this.connection.onopen = function(event) {
-        console.log(event);
-        console.log("Succesfully connected to websocket.")
-      }
-    },
-  },
-  mounted() {
-    
   },
 };
 </script>

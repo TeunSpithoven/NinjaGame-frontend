@@ -6,11 +6,9 @@
     <br />
     <label for="gamename"><b>GameName</b></label>
     <br />
-    <input v-model="gamename" placeholder="gamename" type="text" />
+    <input v-model="this.gamename" placeholder="gamename" type="text" />
     <br />
-      <button v-on:click="join(this.game_data.gamename)">Connect
-        <router-link to="./game"></router-link>
-      </button>
+    <button v-on:click="join()">Connect</button>
     <br>
     <button v-on:click="sendGameData()">Test Send GameData</button>
   </div>
@@ -22,8 +20,9 @@ export default {
   data() {
     return {
       connection: null,
+      gamename: '',
+
       game_data: {
-        gamename: '',
         player: {
           username: 'testusername',
           posX: 50,
@@ -38,10 +37,15 @@ export default {
     };
   },
   methods: {
-    join(gamename) {
+    join() {
       //route to game and make websocket connection there
       console.log("Starting connection to WebSocket Server");
-      this.connection = new WebSocket(`ws://127.0.0.1:8008/ws/${gamename}/`);
+      this.connection = new WebSocket(`ws://127.0.0.1:8008/ws/${this.gamename}/`);
+      this.connection.onopen = function(event) {
+        console.log(event);
+        console.log("Succesfully connected to websocket.")
+        this.$emit('update-connection', this.connection);
+      }
     },
     sendGameData() {
       console.log(this.connection);
