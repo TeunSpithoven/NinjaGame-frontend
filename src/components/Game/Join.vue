@@ -39,16 +39,16 @@ export default {
   methods: {
     join() {
       //route to game and make websocket connection there
-      console.log("Starting connection to WebSocket Server");
+      // console.log("Starting connection to WebSocket Server");
       this.connection = new WebSocket(`ws://127.0.0.1:8008/ws/${this.gamename}/`);
       this.connection.onopen = function(event) {
-        console.log(event);
-        console.log("Succesfully connected to websocket.")
+        // console.log(event);
+        // console.log("Succesfully connected to websocket.")
         this.$emit('update-connection', this.connection);
       }
     },
     sendGameData() {
-      console.log(this.connection);
+      // console.log(this.connection);
       this.connection.send(JSON.stringify(this.game_data));
     },
   },

@@ -14,10 +14,10 @@ export default {
     Login_Success(value) {
       if(value){
         // eslint-disable-next-line
-        console.log('login.vue - login succesful');
+        // console.log('login.vue - login succesful');
       }else{
         // eslint-disable-next-line
-        console.log('login.vue - login failed');
+        // console.log('login.vue - login failed');
       }
     },
   },

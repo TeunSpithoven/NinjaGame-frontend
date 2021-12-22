@@ -45,8 +45,8 @@ export default {
             return response.json();
           })
           .then(data => {
-            console.log('refresh: ' + data.refresh);
-            console.log('access: ' + data.access);
+            // console.log('refresh: ' + data.refresh);
+            // console.log('access: ' + data.access);
             this.$emit('success', true);
           })
           .catch((error) => {

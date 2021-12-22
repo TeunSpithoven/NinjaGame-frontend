@@ -46,7 +46,7 @@ export default {
             return response.json();
           })
           .catch(function() {
-            console.log("error");
+            // console.log("error");
           });
       } else {
         if (password.length < 8) {
