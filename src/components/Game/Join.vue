@@ -42,6 +42,7 @@ export default {
       // console.log("Starting connection to WebSocket Server");
       this.connection = new WebSocket(`ws://127.0.0.1:8008/ws/${this.gamename}/`);
       this.connection.onopen = function(event) {
+        event = '';
         // console.log(event);
         // console.log("Succesfully connected to websocket.")
         this.$emit('update-connection', this.connection);

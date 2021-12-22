@@ -45,6 +45,7 @@ export default {
             return response.json();
           })
           .then(data => {
+            data = '';
             // console.log('refresh: ' + data.refresh);
             // console.log('access: ' + data.access);
             this.$emit('success', true);
