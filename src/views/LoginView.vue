@@ -13,8 +13,10 @@ export default {
   methods: {
     Login_Success(value) {
       if(value){
+        // eslint-disable-next-line
         console.log('login.vue - login succesful');
       }else{
+        // eslint-disable-next-line
         console.log('login.vue - login failed');
       }
     },
