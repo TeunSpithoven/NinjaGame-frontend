@@ -2,13 +2,13 @@
   <div class="container">
     <label for="username"><b>username</b></label>
     <br />
-    <input v-model="username" placeholder="username" type="text" />
+    <input id="usernameInput" v-model="username" placeholder="username" type="text" />
     <br />
     <label for="password"><b>password</b></label>
     <br />
-    <input v-model="password" placeholder="password" type="password" />
+    <input id="passwordInput" v-model="password" placeholder="password" type="password" />
 
-    <button v-on:click="login(username, password)">Login</button>
+    <button v-on:click="login()">Login</button>
     <br>
   </div>
 </template>
@@ -25,15 +25,15 @@ export default {
   },
   methods: {
     // here should be a rest call with the backend server for logging in
-    login(username, password) {
+    login() {
       this.error = '';
-      if (username != "" && password.length > 7) {
+      if (this.username != "" && this.password.length > 7) {
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            username: username,
-            password: password,
+            username: this.username,
+            password: this.password,
           }),
         };
 
@@ -57,11 +57,11 @@ export default {
             this.$emit('success', false);
           });
       } else {
-        if (password.length < 8 || password.length <= 0) {
+        if (this.password.length < 8 || this.password.length <= 0) {
           this.error = 'Did you enter the right password?';
           alert(this.error);
         }
-        if (username == ''){
+        if (this.username == ''){
           this.error = 'Did you enter the right username?';
           alert(this.error);
         }

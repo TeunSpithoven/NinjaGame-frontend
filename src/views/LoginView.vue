@@ -10,6 +10,11 @@ export default {
   components: {
     Login,
   },
+  data() {
+    return {
+      token: null,
+    };
+  },
   methods: {
     Login_Success(value) {
       if(value){

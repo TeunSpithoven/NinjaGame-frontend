@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    Hallo dit is het menu
+    <h1>Hallo dit is het menu</h1>
   </div>
 </template>
 

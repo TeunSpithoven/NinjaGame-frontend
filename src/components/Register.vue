@@ -2,13 +2,13 @@
   <div class="container">
     <label for="uname"><b>Username</b></label>
     <br />
-    <input v-model="username" placeholder="username" type="text" />
+    <input id="usernameInput" v-model="username" placeholder="username" type="text" />
     <br />
     <label for="psw"><b>Password</b></label>
     <br />
-    <input v-model="password" placeholder="password" type="password" />
+    <input id="passwordInput" v-model="password" placeholder="password" type="password" />
 
-    <button v-on:click="register(username, password)">Register</button>
+    <button v-on:click="register()">Register</button>
     <br />
   </div>
 </template>
@@ -23,18 +23,15 @@ export default {
     };
   },
   methods: {
-    register(username, password) {
-      if (username != "" && password.length > 7) {
+    register() {
+      if (this.username != "" && this.password.length > 7) {
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            username: username,
-            password: password,
-            password2: password,
-            email: `${username}@${username}.com`,
-            first_name: "",
-            last_name: "",
+            username: this.username,
+            password: this.password,
+            password2: this.password,
           }),
         };
 
@@ -49,7 +46,7 @@ export default {
             // console.log("error");
           });
       } else {
-        if (password.length < 8) {
+        if (this.password.length < 8) {
           alert("your password should be at least 8 characters in length");
         }
       }
