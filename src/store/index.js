@@ -1,3 +1,5 @@
+import store from 'vuex';
+
 export default store = new Vuex.Store({
   state: {
     roomName: '',

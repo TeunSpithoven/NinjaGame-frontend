@@ -46,6 +46,7 @@ export default {
           })
           .then(data => {
             data = '';
+            console.log(data);
             // console.log('refresh: ' + data.refresh);
             // console.log('access: ' + data.access);
             this.$emit('success', true);
