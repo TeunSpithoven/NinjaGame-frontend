@@ -1,4 +1,5 @@
 import store from 'vuex';
+import Vuex from 'vuex';
 
 export default store = new Vuex.Store({
   state: {
