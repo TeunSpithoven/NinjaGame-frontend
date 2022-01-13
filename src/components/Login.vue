@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: "Login",
   data() {
@@ -22,6 +24,16 @@ export default {
       password: '',
       error: 'initialError',
     };
+  },
+  computed: {
+    ...mapGetters([
+      'getToken',
+      'getRefresh',
+    ]),
+    ...mapActions([
+      'SET_token',
+      'SET_refresh',
+    ]),
   },
   methods: {
     // here should be a rest call with the backend server for logging in
@@ -45,10 +57,10 @@ export default {
             return response.json();
           })
           .then(data => {
-            data = '';
-            console.log(data);
-            // console.log('refresh: ' + data.refresh);
-            // console.log('access: ' + data.access);
+            this.$store.commit('SET_token', data.access);
+            this.$store.commit('SET_refresh', data.refresh);
+            console.log(`token after login: ${this.getToken}`);
+            console.log(`refresh after login: ${this.getRefresh}`);
             this.$emit('success', true);
           })
           .catch((error) => {

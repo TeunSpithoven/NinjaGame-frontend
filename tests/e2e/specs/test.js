@@ -1,5 +1,6 @@
 // https://docs.cypress.io/api/introduction/api.html
 
+/* eslint-disable */
 describe('Visit root', () => {
   it('Visits the app root url', () => {
     cy.visit('localhost:8080/')

@@ -1,15 +1,9 @@
-import Vue from 'vue';
 import Vuex from 'vuex';
 
-Vue.use(Vuex)
+import userModule from './user';
 
-const store = new Vuex.Store({
-  state: {
-    count: 0,
-  },
-  mutations: {
-    increment (state) {
-      state.count++;
-    },
+export default new Vuex.Store({
+  modules: {
+    userModule,
   },
 });
