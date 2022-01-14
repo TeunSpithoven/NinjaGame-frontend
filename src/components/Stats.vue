@@ -1,7 +1,8 @@
 <template>
     <div id="statsContainer">
         <button @click="getGames()">Update</button>
-        <ul>
+        <h3 v-if="this.games.count > 1"> There aren't any games in the database. </h3>
+        <ul v-if="this.games.count > 0">
             <li v-for="item in this.games" :key="item.score">
                 {{ item.score }}, {{ item.user }}
             </li>
@@ -16,10 +17,7 @@ export default {
     name: 'Stats',
     data() {
         return {
-            games: [
-                { score: 10, user: 'huts' },
-                { score: 1044, user: 'huvsvsts' },
-            ],
+            games: [],
         };
     },
     computed: {
@@ -55,6 +53,7 @@ export default {
                 })
                 .then(data => {
                     console.log(data);
+                    this.games = data;
                 })
                 .catch((error) => {
                     console.error('Error:', error);

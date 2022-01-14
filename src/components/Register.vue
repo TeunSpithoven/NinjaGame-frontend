@@ -10,6 +10,7 @@
 
     <button v-on:click="register()">Register</button>
     <br />
+    <h3>{{ message }}</h3>
   </div>
 </template>
 
@@ -18,8 +19,9 @@ export default {
   name: "Register",
   data() {
     return {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
+      message: '',
     };
   },
   methods: {
@@ -38,8 +40,16 @@ export default {
         fetch("http://127.0.0.1:8000/auth/register/", requestOptions)
           .then((response) => {
             if (!response.ok) {
+              if(response.status === 400) {
+                this.message = 'The given username is already in use';
+              }
               throw response;
             }
+            if (response.status === 201) {
+              this.message = `Account created!, redirecting to login...`;
+              setTimeout(() => this.$router.push('/Login'), 2000);
+            }
+            console.log(response);
             return response.json();
           })
           .catch(function() {
