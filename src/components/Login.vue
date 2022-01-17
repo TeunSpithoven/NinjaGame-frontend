@@ -8,8 +8,9 @@
     <br />
     <input id="passwordInput" v-model="password" placeholder="password" type="password" />
 
-    <button v-on:click="login()">Login</button>
+    <button v-on:click="login()">Login<p v-if="this.loading"> Loading...</p></button>
     <br>
+    <h3>{{ message }}</h3>
   </div>
 </template>
 
@@ -22,6 +23,8 @@ export default {
     return {
       username: '',
       password: '',
+      message: '',
+      loading: false,
       error: 'initialError',
     };
   },
@@ -38,6 +41,7 @@ export default {
   methods: {
     // here should be a rest call with the backend server for logging in
     login() {
+      this.loading = true;
       this.error = '';
       if (this.username != "" && this.password.length > 7) {
         const requestOptions = {
@@ -51,9 +55,12 @@ export default {
 
         fetch("https://ninjagamebackend.azurewebsites.net/auth/token/", requestOptions)
           .then((response) => {
+            this.loading = false;
             if (!response.ok) {
+              this.message = 'wrong username or password'
               throw response;
             }
+            this.message = 'succesfully logged in'
             return response.json();
           })
           .then(data => {
@@ -72,10 +79,12 @@ export default {
         if (this.password.length < 8 || this.password.length <= 0) {
           this.error = 'Did you enter the right password?';
           alert(this.error);
+          this.loading = false;
         }
         if (this.username == ''){
           this.error = 'Did you enter the right username?';
           alert(this.error);
+          this.loading = false;
         }
         this.$emit('success', false);
       }

@@ -8,7 +8,7 @@
     <br />
     <input id="passwordInput" v-model="password" placeholder="password" type="password" />
 
-    <button v-on:click="register()">Register</button>
+    <button v-on:click="register()">Register<p v-if="this.loading"> Loading...</p></button>
     <br />
     <h3>{{ message }}</h3>
   </div>
@@ -22,10 +22,12 @@ export default {
       username: '',
       password: '',
       message: '',
+      loading: false,
     };
   },
   methods: {
     register() {
+      this.loading = true;
       if (this.username != "" && this.password.length > 7) {
         const requestOptions = {
           method: "POST",
@@ -39,6 +41,7 @@ export default {
 
         fetch("https://ninjagamebackend.azurewebsites.net/auth/register/", requestOptions)
           .then((response) => {
+            this.loading = false;
             if (!response.ok) {
               if(response.status === 400) {
                 this.message = 'The given username is already in use';
@@ -58,6 +61,7 @@ export default {
       } else {
         if (this.password.length < 8) {
           alert("your password should be at least 8 characters in length");
+          this.loading = false;
         }
       }
     },
