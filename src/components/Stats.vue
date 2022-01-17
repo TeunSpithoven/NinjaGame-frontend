@@ -43,7 +43,7 @@ export default {
                     },
                 };
 
-                fetch("http://127.0.0.1:8000/games/", requestOptions)
+                fetch("https://ninjagamebackend.azurewebsites.net/games/", requestOptions)
                 .then((response) => {
                     if (!response.ok) {
                         this.refresh();
@@ -71,7 +71,7 @@ export default {
                     }),
                 };
 
-                fetch("http://127.0.0.1:8000/auth/token/refresh/", requestOptions)
+                fetch("https://ninjagamebackend.azurewebsites.net/auth/token/refresh/", requestOptions)
                 .then((response) => {
                     if (!response.ok) {
                     throw response;

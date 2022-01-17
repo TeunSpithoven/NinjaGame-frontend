@@ -37,7 +37,7 @@ export default {
           }),
         };
 
-        fetch("http://127.0.0.1:8000/auth/register/", requestOptions)
+        fetch("https://ninjagamebackend.azurewebsites.net/auth/register/", requestOptions)
           .then((response) => {
             if (!response.ok) {
               if(response.status === 400) {
