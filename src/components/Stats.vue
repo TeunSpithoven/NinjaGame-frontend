@@ -1,8 +1,10 @@
 <template>
     <div id="statsContainer">
+        <button @click="this.showCreate = !this.showCreate">Create Game</button>
+        <Create v-if="this.showCreate"/>
         <button @click="getGames()">Update</button>
         <h3 v-if="this.games.count > 1"> There aren't any games in the database. </h3>
-        <ul v-if="this.games.count > 0">
+        <ul>
             <li v-for="item in this.games" :key="item.score">
                 {{ item.score }}, {{ item.user }}
             </li>
@@ -12,12 +14,17 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import Create from './Game/Create.vue'
 
 export default {
     name: 'Stats',
+    components: {
+        Create,
+    },
     data() {
         return {
             games: [],
+            showCreate: false,
         };
     },
     computed: {
@@ -52,8 +59,8 @@ export default {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
-                    this.games = data;
+                    console.log(data.results);
+                    this.games = data.results;
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -93,6 +100,14 @@ export default {
 </script>
 
 <style scoped>
+#statsContainer {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30vh;
+  width: 40em;
+  padding: 15px;
+}
+
 #button {
     width: 20vw;
 }

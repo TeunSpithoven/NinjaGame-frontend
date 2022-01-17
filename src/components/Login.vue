@@ -59,8 +59,9 @@ export default {
             if (!response.ok) {
               this.message = 'wrong username or password'
               throw response;
+            } else if(response.status === 200) {
+              this.message = 'succesfully logged in'
             }
-            this.message = 'succesfully logged in'
             return response.json();
           })
           .then(data => {
@@ -95,11 +96,11 @@ export default {
 
 <style>
 .container {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30vh;
-    width: 17em;
-    padding: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30vh;
+  width: 17em;
+  padding: 15px;
 }
 
 /* Full-width inputs */

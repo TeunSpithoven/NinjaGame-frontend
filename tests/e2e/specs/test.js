@@ -41,6 +41,9 @@ describe('Log in', () => {
   it('Clicks the login button', () => {
     cy.get('button').click()
   })
+  it('Checks for the succes message', () => {
+    cy.contains('h3', 'succesfully logged in')
+  })
 })
 
 describe('Stats', () => {
@@ -49,5 +52,8 @@ describe('Stats', () => {
   })
   it('Checks if the Update button is present', () => {
     cy.contains('button', 'Update')
+  })
+  it('Checks if the Create button is present', () => {
+    cy.contains('button', 'Create')
   })
 })

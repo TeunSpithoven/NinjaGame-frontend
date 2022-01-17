@@ -23,6 +23,7 @@ export default {
       password: '',
       message: '',
       loading: false,
+      error: '',
     };
   },
   methods: {
@@ -55,8 +56,10 @@ export default {
             console.log(response);
             return response.json();
           })
-          .catch(function() {
-            // console.log("error");
+          .catch((error) => {
+            console.error('Error:', error);
+            this.error = error;
+            this.$emit('success', false);
           });
       } else {
         if (this.password.length < 8) {
