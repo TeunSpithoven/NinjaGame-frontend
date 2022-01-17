@@ -15,6 +15,8 @@ jobs:
 
       steps:
       - uses: actions/checkout@v2
+      - name: install dependencies
+        run: npm install
       - name: Cypress install
         run: npx cypress install
       - name: Cypress run
@@ -47,6 +49,6 @@ jobs:
     - name: Login to Docker
       run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
     - name: Build Image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ninjagame-backend:latest .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ninjagame-frontend:latest .
     - name: Push Image To DockerHub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/ninjagame-backend:latest
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/ninjagame-frontend:latest
