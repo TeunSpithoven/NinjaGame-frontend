@@ -14,49 +14,28 @@ jobs:
       runs-on: ubuntu-latest
 
       steps:
-      - uses: actions/checkout@v2
-      - name: install dependencies
-        run: npm install
-      - name: Cypress install
-        run: npx cypress install
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm run serve
-
-  lint:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16.x
-        cache: 'npm'
-    - run: npm install
-    - run: npm run lint
-  
-  dockerhub:
-
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16.x
-        cache: 'npm'
-    - run: npm install
-    
-    - name: Install Docker
-      uses: docker/setup-buildx-action@v1
-    - name: Login to Docker
-      run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
-    - name: Build Image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ninjagame-frontend:latest .
-    - name: Push Image To DockerHub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/ninjagame-frontend:latest
+        - uses: actions/checkout@v2
+        - name: Use Node.js 16.x
+          uses: actions/setup-node@v2
+          with:
+            node-version: 16.x
+            cache: 'npm'
+        - name: Install Dependencies
+        - run: npm install
+        - name: Lint with ESlint
+        - run: npm run lint
+        - name: Cypress install
+          run: npx cypress install
+        - name: Cypress run
+          uses: cypress-io/github-action@v2
+          with:
+            build: npm run build
+            start: npm run serve
+        - name: Install Docker
+          uses: docker/setup-buildx-action@v1
+        - name: Login to Docker
+          run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+        - name: Build Image
+          run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ninjagame-frontend:latest .
+        - name: Push Image To DockerHub
+          run: docker push ${{ secrets.DOCKER_USERNAME }}/ninjagame-frontend:latest
