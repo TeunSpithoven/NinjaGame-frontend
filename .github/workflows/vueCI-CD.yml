@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  cypress-run:
+  node16x:
       runs-on: ubuntu-latest
 
       steps:
