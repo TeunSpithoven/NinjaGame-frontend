@@ -21,9 +21,9 @@ jobs:
             node-version: 16.x
             cache: 'npm'
         - name: Install Dependencies
-        - run: npm install
+          run: npm install
         - name: Lint with ESlint
-        - run: npm run lint
+          run: npm run lint
         - name: Cypress install
           run: npx cypress install
         - name: Cypress run
