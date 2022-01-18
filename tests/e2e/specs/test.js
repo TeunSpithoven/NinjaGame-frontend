@@ -29,6 +29,7 @@ describe('Register', () => {
 
 describe('Log in', () => {
   it('Visits the login url', () => {
+    cy.wait(1000)
     cy.visit(`${url}/login`)
   })
   it('Checks if the login button is present', () => {
@@ -47,13 +48,32 @@ describe('Log in', () => {
 })
 
 describe('Stats', () => {
-  it('Visits the stats url', () => {
-    cy.visit(`${url}/stats`)
+  it('Visits the stats page', () => {
+    cy.contains('a', 'Stats').click()
   })
   it('Checks if the Update button is present', () => {
     cy.contains('button', 'Update')
   })
-  it('Checks if the Create button is present', () => {
-    cy.contains('button', 'Create')
+  it('Checks if the Create Game button is present', () => {
+    cy.contains('button', 'Create Game')
+  })
+  it('Clicks the create button', () => {
+    cy.get('button[id="showCreateButton"]').click()
+  })
+  it('Fills in the username', () => {
+    cy.get('input[id="usernameInput"]').type(username)
+  })
+  it('Fills in the score', () => {
+    cy.get('input[id="scoreInput"]').type(120)
+  })
+  it('Clicks the create button', () => {
+    cy.get('button[id="submitCreate"]').click()
+  })
+  it('Clicks the update button', () => {
+    cy.contains('button', 'Update').click()
+    cy.contains('button', 'Update').click()
+  })
+  it('Checks for the created game', () => {
+    cy.contains('li', '120, cypresstestuser')
   })
 })

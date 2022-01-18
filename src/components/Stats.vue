@@ -1,11 +1,11 @@
 <template>
     <div id="statsContainer">
-        <button @click="this.showCreate = !this.showCreate">Create Game</button>
+        <button id="showCreateButton" @click="this.showCreate = !this.showCreate">Create Game</button>
         <Create v-if="this.showCreate"/>
         <button @click="getGames()">Update</button>
         <h3 v-if="this.games.count > 1"> There aren't any games in the database. </h3>
         <ul>
-            <li v-for="item in this.games" :key="item.score">
+            <li id="gameList" v-for="item in this.games" :key="item.score">
                 {{ item.score }}, {{ item.user }}
             </li>
         </ul>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import Create from './Game/Create.vue'
 
 export default {
@@ -30,12 +30,15 @@ export default {
     computed: {
         ...mapGetters([
             'getToken',
-            'getRefresh'
+            'getRefresh',
+        ]),
+        ...mapActions([
+            'SET_token',
         ]),
     },
     mounted() {
         console.log(`this.getToken: ${this.getToken}`);
-        if(this.getToken === null || this.getToken === 'testtoken') {
+        if(this.getToken === null || this.getToken === '') {
             console.log('no token found, redirecting to login');
         }
     },
@@ -52,8 +55,10 @@ export default {
 
                 fetch("https://ninjagamebackend.azurewebsites.net/games/", requestOptions)
                 .then((response) => {
-                    if (!response.ok) {
+                    if(response.status === 401) {
                         this.refresh();
+                    }
+                    if (!response.ok) {
                         throw response;
                     }
                     return response.json();
@@ -103,12 +108,16 @@ export default {
 #statsContainer {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 30vh;
+  margin-top: 10vh;
   width: 40em;
   padding: 15px;
 }
 
-#button {
+button {
     width: 20vw;
+}
+
+ul {
+    width: auto;
 }
 </style>

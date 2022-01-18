@@ -1,11 +1,14 @@
 <template>
     <div id="CreateGameContainer">
         <label for="username"><b>username</b></label>
-        <br />
+        <br>
         <input id="usernameInput" v-model="username" placeholder="username" type="text" />
+        <br>
         <label for="score">Score</label>
+        <br>
         <input id="scoreInput" v-model="score" placeholder="128" type="number">
-        <button @click="Submit()">Create<p v-if="this.loading"> Loading...</p></button>
+        <br>
+        <button id="submitCreate" @click="Submit()">Create<p v-if="this.loading"> Loading...</p></button>
         <h3>{{ message }}</h3>
     </div>
 </template>
@@ -18,7 +21,7 @@ export default {
     data() {
         return{
             username: null,
-            score: 0,
+            score: null,
             start_datetime: '2019-12-10 14:43:35.542195',
             end_datetime: '2019-12-10 14:43:35.542195',
             message: '',
@@ -36,6 +39,8 @@ export default {
         Submit() {
             // this.start_datetime = Date.now();
             // this.end_datetime = Date.now();
+            console.log('this.getToken before creating game:');
+            console.log(this.getToken);
             this.loading = true;
             this.error = '';
             const requestOptions = {
@@ -74,3 +79,12 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+button {
+    width: 20vw;
+}
+input {
+    width: 20vw;
+}
+</style>
