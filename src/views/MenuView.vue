@@ -9,7 +9,3 @@ export default {
   name: 'MenuView',
 }
 </script>
-
-<style>
-
-</style>

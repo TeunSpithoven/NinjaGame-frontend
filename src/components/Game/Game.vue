@@ -32,7 +32,6 @@ export default {
   padding: 15px;
 }
 
-/* Full-width inputs */
 input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -43,7 +42,6 @@ input[type="password"] {
   box-sizing: border-box;
 }
 
-/* Set a style for all buttons */
 button {
   background-color: #b95216;
   color: white;
@@ -55,7 +53,6 @@ button {
   box-sizing: border-box;
 }
 
-/* Add a hover effect for buttons */
 button:hover {
   opacity: 0.8;
 }

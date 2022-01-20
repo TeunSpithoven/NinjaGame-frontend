@@ -37,8 +37,6 @@ export default {
     },
     methods: {
         Submit() {
-            // this.start_datetime = Date.now();
-            // this.end_datetime = Date.now();
             console.log('this.getToken before creating game:');
             console.log(this.getToken);
             this.loading = true;
