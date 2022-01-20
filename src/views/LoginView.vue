@@ -12,21 +12,7 @@ export default {
   },
   data() {
     return {
-      token: null,
     };
-  },
-  methods: {
-    Login_Success(value) {
-      if(value){
-        value = '';
-        // eslint-disable-next-line
-        // console.log('login.vue - login succesful');
-      }else{
-        value = '';
-        // eslint-disable-next-line
-        // console.log('login.vue - login failed');
-      }
-    },
   },
 };
 </script>
