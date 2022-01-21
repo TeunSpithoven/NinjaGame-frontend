@@ -34,6 +34,7 @@ export default {
       'getRefresh',
     ]),
     ...mapActions([
+      'SET_username',
       'SET_token',
       'SET_refresh',
     ]),
@@ -65,6 +66,7 @@ export default {
             return response.json();
           })
           .then(data => {
+            this.$store.commit('SET_username', this.username);
             this.$store.commit('SET_token', data.access);
             this.$store.commit('SET_refresh', data.refresh);
             console.log(`token after login: ${this.getToken}`);
