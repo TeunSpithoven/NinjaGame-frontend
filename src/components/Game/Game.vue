@@ -1,5 +1,34 @@
 <template>
   <div>
+    <h3>Connection status: <div id="connected">closed</div></h3>
+    <br>
+    <div
+      id="joinContainer"
+    >
+      <label for="gamename"><b>GameName</b></label>
+      <br />
+      <input v-model="this.gamename" placeholder="gamename" type="text" />
+      <br />
+      <button v-on:click="join()">Connect</button>
+    </div>
+    <div
+      id="gameContainer"
+    >
+      <canvas id="gameCanvas"></canvas>
+      <button @click="disconnect()">Disconnect</button>
+      <br>
+      <button v-on:click="sendGameData()">Test Send GameData</button>
+      <br>
+      <button v-on:click="onLeft()">Left</button>
+      <br>
+      <button v-on:click="onUp()">Up</button>
+      <br>
+      <button v-on:click="onDown()">Down</button>
+      <br>
+      <button v-on:click="onRight()">Right</button>
+      <br>
+      <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+    </div>
     <MyCanvas style="width: 100%; height: 600px;">
       <MyBox
         v-for="(obj, index) of chartValues"
@@ -13,34 +42,6 @@
       >
       </MyBox>
     </MyCanvas>
-    <h3>Connected to Websocket: {{ this.connected }}</h3>
-    <br>
-    <label v-bind="this.connected"></label>
-    <div
-      v-if="!this.connected.connected"
-      class="joinContainer"
-    >
-      <label for="gamename"><b>GameName</b></label>
-      <br />
-      <input v-model="this.gamename" placeholder="gamename" type="text" />
-      <br />
-      <button v-on:click="join()">Connect</button>
-    </div>
-    <div
-      id="gameContainer"
-    >
-      <button @click="disconnect()">Disconnect</button>
-      <br>
-      <button v-on:click="sendGameData()">Test Send GameData</button>
-      <br>
-      <textarea v-model="this.messages" id="chat-log" cols="100" rows="20"></textarea><br>
-      {{ messages }}
-      <ul>
-        <li v-for="message in messages" v-bind:key="message.player.username">
-          {{ message }}
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -67,13 +68,11 @@ export default {
       ],
 
       connection: null,
-      connected: false,
       gamename: '',
-      messages: null,
 
       username: '',
-      playerPosX: null,
-      playerPosy: null,
+      playerPosX: 30,
+      playerPosy: 30,
       platerName: '',
       shurikenPosX: null,
       shurikenPosY: null,
@@ -98,6 +97,7 @@ export default {
     ]),
   },
   mounted() {
+    document.getElementById('gameContainer').style.display = 'none';
     let dir = 1;
     let selectedVal = Math.floor(Math.random() * this.chartValues.length);
 
@@ -113,35 +113,54 @@ export default {
     }, 16);
   },
   methods: {
+    printMessages() {
+      console.log(this.messages);
+    },
     join() {
+      if(this.connection != null) {
+        this.connection.close(1000, 'Deliberate disconnection');
+      }
       this.connection = new WebSocket(`ws://127.0.0.1:8008/ws/chat/${this.gamename}/`);
 
       let data = {};
 
-      this.connection.onopen = function(event) {
-        console.log(event);
-        this.connected = true;
-        console.log(this.connected);
-      }
-      this.connection.onmessage = function(event) {
-        data = JSON.parse(event.data);
+      this.connection.onopen = (e) => {
+        document.querySelector('#connected').innerHTML = e.type;
+        document.getElementById('joinContainer').style.display = 'none';
+        document.getElementById('gameContainer').style.display = 'block';
+      };
+      this.connection.onmessage = (e) => {
+        data = JSON.parse(e.data);
         console.log(data.message);
         document.querySelector('#chat-log').value += (data.message.player.username + '\n');
+        // prepare coordinates
+        var posX = data.message.player.posX;
+        var posY = data.message.player.posY;
+        // draw on gameCanvas
+        var canvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(posX, posY, 30, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
       }
-      this.connection.onclose = function(event) {
-        this.connected = false;
-        console.log(event);
-        console.log(this.connection);
+      this.connection.onclose = (e) => {
+        console.log(e);
+        document.querySelector('#connected').innerHTML = e.type;
+        document.getElementById('joinContainer').style.display = 'block';
+        document.getElementById('gameContainer').style.display = 'none';
       }
-      this.connection.onerror = function(event) {
-        this.connected = false;
-        console.log(event);
+      this.connection.onerror = (e) => {
+        console.log(e);
+        document.querySelector('#connected').innerHTML = e.type;
+        document.getElementById('joinContainer').style.display = 'block';
+        document.getElementById('gameContainer').style.display = 'none';
       }
     },
     sendGameData() {
       this.message.player.username = this.getUsername;
-      this.message.player.posX = 100;
-      this.message.player.posY = 200;
+      this.message.player.posX = this.playerPosX;
+      this.message.player.posY = this.playerPosy;
       this.message.shuriken.playerName = this.getUsername;
       this.message.shuriken.posX = 300;
       this.message.shuriken.posY = 400;
@@ -151,15 +170,34 @@ export default {
     disconnect() {
       this.connection.close();
     },
+    onLeft() {
+
+    },
+    onUp() {
+
+    },
+    onDown() {
+
+    },
+    onRight() {
+      this.playerPosX += 1;
+      this.sendGameData();
+    },
   },
 };
 </script>
 
 <style>
-.joinContainer {
+#gameCanvas {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 3vh;
+  width: 20vw;
+  border:1px solid #000000;
+}
+
+#joinContainer {
+  margin-left: auto;
+  margin-right: auto;
   width: 17em;
   padding: 15px;
 }
