@@ -15,19 +15,20 @@
       id="gameContainer"
     >
       <canvas id="gameCanvas"></canvas>
+      <br>
       <button @click="disconnect()">Disconnect</button>
       <br>
-      <button v-on:click="sendGameData()">Test Send GameData</button>
+      <button v-on:click="sendGameData()">Start</button>
       <br>
-      <button v-on:click="onLeft()">Left</button>
+      <button id="upButton" v-on:click="onUp()">Up</button>
       <br>
-      <button v-on:click="onUp()">Up</button>
+      <button id="leftButton" v-on:click="onLeft()">Left</button>
+      <button id="rightButton" v-on:click="onRight()">Right</button>
       <br>
-      <button v-on:click="onDown()">Down</button>
       <br>
-      <button v-on:click="onRight()">Right</button>
       <br>
-      <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+      <br>
+      <button id="downButton" v-on:click="onDown()">Down</button>
     </div>
     <MyCanvas style="width: 100%; height: 600px;">
       <MyBox
@@ -71,8 +72,8 @@ export default {
       gamename: '',
 
       username: '',
-      playerPosX: 30,
-      playerPosy: 30,
+      playerPosX: 100,
+      playerPosY: 100,
       platerName: '',
       shurikenPosX: null,
       shurikenPosY: null,
@@ -132,13 +133,13 @@ export default {
       this.connection.onmessage = (e) => {
         data = JSON.parse(e.data);
         console.log(data.message);
-        document.querySelector('#chat-log').value += (data.message.player.username + '\n');
         // prepare coordinates
         var posX = data.message.player.posX;
         var posY = data.message.player.posY;
         // draw on gameCanvas
         var canvas = document.getElementById("gameCanvas");
         var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.arc(posX, posY, 30, 0, 2 * Math.PI);
         ctx.stroke();
@@ -160,7 +161,7 @@ export default {
     sendGameData() {
       this.message.player.username = this.getUsername;
       this.message.player.posX = this.playerPosX;
-      this.message.player.posY = this.playerPosy;
+      this.message.player.posY = this.playerPosY;
       this.message.shuriken.playerName = this.getUsername;
       this.message.shuriken.posX = 300;
       this.message.shuriken.posY = 400;
@@ -171,16 +172,19 @@ export default {
       this.connection.close();
     },
     onLeft() {
-
+      this.playerPosX = this.playerPosX - 5;
+      this.sendGameData();
     },
     onUp() {
-
+      this.playerPosY = this.playerPosY - 5;
+      this.sendGameData();
     },
     onDown() {
-
+      this.playerPosY += 5;
+      this.sendGameData();
     },
     onRight() {
-      this.playerPosX += 1;
+      this.playerPosX += 5;
       this.sendGameData();
     },
   },
@@ -193,6 +197,18 @@ export default {
   margin-right: auto;
   width: 20vw;
   border:1px solid #000000;
+}
+
+#leftButton {
+  margin-left: 35vw;
+  float: left;
+  margin-right:10px;
+  width: 9em;
+}
+#rightButton{
+  float: left;
+  margin-left: 10px;
+  width: 9em;
 }
 
 #joinContainer {
@@ -221,7 +237,7 @@ button {
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 20%;
   box-sizing: border-box;
 }
 
