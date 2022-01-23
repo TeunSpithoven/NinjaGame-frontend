@@ -18,8 +18,6 @@
       <br>
       <button @click="disconnect()">Disconnect</button>
       <br>
-      <button v-on:click="sendGameData()">Start</button>
-      <br>
       <button id="upButton" v-on:click="onUp()">Up</button>
       <br>
       <button id="leftButton" v-on:click="onLeft()">Left</button>
@@ -30,7 +28,7 @@
       <br>
       <button id="downButton" v-on:click="onDown()">Down</button>
     </div>
-    <MyCanvas style="width: 100%; height: 600px;">
+    <!-- <MyCanvas style="width: 100%; height: 600px;">
       <MyBox
         v-for="(obj, index) of chartValues"
         :key=index
@@ -42,21 +40,21 @@
         :value="obj.val"
       >
       </MyBox>
-    </MyCanvas>
+    </MyCanvas> -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import MyCanvas from '../MyCanvas.vue';
-import MyBox from '../MyBox.vue';
+// import MyCanvas from '../MyCanvas.vue';
+// import MyBox from '../MyBox.vue';
 
 export default {
   name: "Join",
-  components: {
-    MyCanvas,
-    MyBox,
-  },
+  // components: {
+  //   MyCanvas,
+  //   MyBox,
+  // },
   data() {
     return {
       chartValues: [
@@ -124,34 +122,50 @@ export default {
       this.connection = new WebSocket(`ws://127.0.0.1:8008/ws/chat/${this.gamename}/`);
 
       let data = {};
+      let game_data;
 
       this.connection.onopen = (e) => {
+        var canvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.arc(100, 100, 30, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
         document.querySelector('#connected').innerHTML = e.type;
         document.getElementById('joinContainer').style.display = 'none';
         document.getElementById('gameContainer').style.display = 'block';
       };
       this.connection.onmessage = (e) => {
         data = JSON.parse(e.data);
-        console.log(data.message);
-        // prepare coordinates
-        var posX = data.message.player.posX;
-        var posY = data.message.player.posY;
-        // draw on gameCanvas
+        game_data = data.message;
+        console.log(game_data);
         var canvas = document.getElementById("gameCanvas");
         var ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
-        ctx.arc(posX, posY, 30, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.fill();
+        game_data.forEach(message => {
+          var posX = message.player.posX;
+          var posY = message.player.posY;
+          // draw on gameCanvas
+          ctx.beginPath();
+          ctx.arc(posX, posY, 30, 0, 2 * Math.PI);
+          ctx.stroke();
+          ctx.fill();
+        });
       }
       this.connection.onclose = (e) => {
+        var canvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         console.log(e);
         document.querySelector('#connected').innerHTML = e.type;
         document.getElementById('joinContainer').style.display = 'block';
         document.getElementById('gameContainer').style.display = 'none';
       }
       this.connection.onerror = (e) => {
+        var canvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         console.log(e);
         document.querySelector('#connected').innerHTML = e.type;
         document.getElementById('joinContainer').style.display = 'block';
