@@ -77,3 +77,27 @@ describe('Stats', () => {
     cy.contains('li', '120, cypresstestuser')
   })
 })
+describe('Game', () => {
+  it('Visits the game page', () => {
+    cy.contains('a', 'Game').click()
+  })
+  it('Checks if the Connect button is present', () => {
+    cy.contains('button', 'Connect')
+  })
+  it('Fills in the gamename', () => {
+    cy.get('input[id="gamenameInput"]').type('cypresstestgame')
+  })
+  it('Clicks the Connect button', () => {
+    cy.get('button[id="connectButton"]').click()
+  })
+  it('Checks if the buttons are present', () => {
+    cy.contains('button', 'Disconnect')
+    cy.contains('button', 'Up')
+    cy.contains('button', 'Left')
+    cy.contains('button', 'Right')
+    cy.contains('button', 'Down')
+  })
+  it('Clicks the right button', () => {
+    cy.get('button[id="rightButton"]').click()
+  })
+})

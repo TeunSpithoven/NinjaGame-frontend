@@ -1,6 +1,8 @@
 <template>
     <div id="statsContainer">
-        <button id="showCreateButton" @click="this.showCreate = !this.showCreate">Create Game</button>
+        <button id="showCreateButton" v-if="!this.showCreate" @click="this.showCreate = !this.showCreate">Create Game</button>
+        <button id="hideButton" v-if="this.showCreate" @click="this.showCreate = !this.showCreate">Hide</button>
+        <br>
         <Create v-if="this.showCreate"/>
         <button @click="getGames()">Update</button>
         <h3 v-if="this.games.count > 1"> There aren't any games in the database. </h3>

@@ -7,9 +7,9 @@
     >
       <label for="gamename"><b>GameName</b></label>
       <br />
-      <input v-model="this.gamename" placeholder="gamename" type="text" />
+      <input id="gamenameInput" v-model="this.gamename" placeholder="gamename" type="text" />
       <br />
-      <button v-on:click="join()">Connect</button>
+      <button id="connectButton" class="button" v-on:click="join()">Connect</button>
     </div>
     <div
       id="gameContainer"
@@ -28,19 +28,6 @@
       <br>
       <button id="downButton" v-on:click="onDown()">Down</button>
     </div>
-    <!-- <MyCanvas style="width: 100%; height: 600px;">
-      <MyBox
-        v-for="(obj, index) of chartValues"
-        :key=index
-        :x1="(index / chartValues.length) * 100"
-        :x2="(index / chartValues.length) * 100 + 100 / chartValues.length"
-        :y1="100"
-        :y2="100 - obj.val"
-        :color="obj.color"
-        :value="obj.val"
-      >
-      </MyBox>
-    </MyCanvas> -->
   </div>
 </template>
 
@@ -205,12 +192,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #gameCanvas {
   margin-left: auto;
   margin-right: auto;
   width: 20vw;
   border:1px solid #000000;
+}
+
+.button{
+  width: 100%;
 }
 
 #leftButton {
