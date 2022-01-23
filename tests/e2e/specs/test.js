@@ -97,7 +97,8 @@ describe('Game', () => {
     cy.contains('button', 'Right')
     cy.contains('button', 'Down')
   })
-  it('Clicks the right button', () => {
-    cy.get('button[id="rightButton"]').click()
-  })
+  // test clicking a button (only if the game server is running)
+  // it('Clicks the right button', () => {
+  //   cy.get('button[id="rightButton"]').click()
+  // })
 })
