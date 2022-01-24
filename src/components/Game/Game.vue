@@ -44,15 +44,6 @@ export default {
   // },
   data() {
     return {
-      chartValues: [
-        { val: 24, color: 'red' },
-        { val: 32, color: '#0f0' },
-        { val: 66, color: 'rebeccapurple' },
-        { val: 1, color: 'green' },
-        { val: 28, color: 'blue' },
-        { val: 60, color: 'rgba(150, 100, 0, 0.2)' },
-      ],
-
       connection: null,
       gamename: '',
 
@@ -118,6 +109,7 @@ export default {
         ctx.beginPath();
         ctx.arc(100, 100, 30, 0, 2 * Math.PI);
         ctx.stroke();
+        ctx.fillStyle = 'green';
         ctx.fill();
         document.querySelector('#connected').innerHTML = e.type;
         document.getElementById('joinContainer').style.display = 'none';
@@ -131,12 +123,20 @@ export default {
         var ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game_data.forEach(message => {
+          var canvas = document.getElementById("gameCanvas");
+          var ctx = canvas.getContext("2d");
           var posX = message.player.posX;
           var posY = message.player.posY;
           // draw on gameCanvas
           ctx.beginPath();
           ctx.arc(posX, posY, 30, 0, 2 * Math.PI);
           ctx.stroke();
+          if(message.player.username === this.getUsername) {
+            ctx.fillStyle = 'green';
+          }
+          if(message.player.username !== this.getUsername) {
+            ctx.fillStyle = 'black';
+          }
           ctx.fill();
         });
       }
@@ -170,6 +170,8 @@ export default {
       this.connection.send(JSON.stringify(this.message));
     },
     disconnect() {
+      this.playerPosX = 100;
+      this.playerPosY = 100;
       this.connection.close();
     },
     onLeft() {
@@ -196,7 +198,7 @@ export default {
 #gameCanvas {
   margin-left: auto;
   margin-right: auto;
-  width: 20vw;
+  width: 50vw;
   border:1px solid #000000;
 }
 
