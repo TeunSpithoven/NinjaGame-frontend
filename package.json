@@ -14,12 +14,13 @@
     "fastify": "^3.18.1",
     "fastify-cors": "^6.0.1",
     "fastify-websocket": "^3.2.0",
+    "firebase": "^9.8.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
+  "__comment__":"@testing-library/vue ^5.8.2",
   "devDependencies": {
-    "@testing-library/vue": "^5.8.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
