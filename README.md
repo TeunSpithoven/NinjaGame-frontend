@@ -1,6 +1,8 @@
 # NinjaGame-frontend
 School project front-end in vue.js
 
+Testing with cypress doesn't work at the moment because of difficulties installing the testing-library/vue ^5.8.2 package.
+
 ## Project setup
 ```
 npm install

@@ -26,11 +26,11 @@ jobs:
           run: npm run lint
         - name: Cypress install
           run: npx cypress install
-        - name: Cypress run
-          uses: cypress-io/github-action@v2
-          with:
-            build: npm run build
-            start: npm run serve
+#         - name: Cypress run
+#           uses: cypress-io/github-action@v2
+#           with:
+#             build: npm run build
+#             start: npm run serve
         - name: Install Docker
           uses: docker/setup-buildx-action@v1
         - name: Login to Docker
