@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "TeunSpithoven/NinjaGame-frontend",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
