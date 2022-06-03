@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h2>The Backend for this application is not being hosted at the moment so this application is not functional.<h2>
     <label for="username"><b>username</b></label>
     <br />
     <input id="usernameInput" v-model="username" placeholder="username" type="text" />
